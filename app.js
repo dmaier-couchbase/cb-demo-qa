@@ -18,7 +18,10 @@ app.use('/bower_components',express.static(__dirname + '/bower_components'));
 //The service implementation
 var SERVICE_URL = '/service/';
 
-app.get(SERVICE_URL + 'question', function (req, res) {
+/**
+ * Add a question
+ */
+app.post(SERVICE_URL + 'add', function (req, res) {
 	
     var cust = req.query.cust;
     var rfp = req.query.rfp;
@@ -52,6 +55,29 @@ app.get(SERVICE_URL + 'question', function (req, res) {
     }    
 });
 
+/**
+ * Import CSV
+ */
+app.post(SERVICE_URL + 'import', function (req, res) { 
+
+    //TODO
+});
+
+/**
+ * Query Elastic Search
+ */
+app.get(SERVICE_URL + 'query', function (req, res) { 
+
+    //TODO
+});
+
+/**
+ * Add a comment
+ */
+app.post(SERVICE_URL + 'comment', function (req, res) { 
+
+    //TODO
+});
 
 //Web server
 server = app.listen(9000, function () { 
