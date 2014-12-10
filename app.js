@@ -7,6 +7,9 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//Couchbase requirements
+var couchbase = require('couchbase');
+
 //Set up logging
 //var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'});
 //var logger = morgan('combined', {stream: accessLogStream});
