@@ -140,13 +140,13 @@ app.get(SERVICE_URL + 'list', function (req, res) {
                 
                 for (j in keys)
                 {
-                    console.log("key = " + keys[j]);
+                    var key = keys[j];
+                    //console.log("key = " + key);
                     
                     var value = cbres[key].value;
-                    
-                    console.log("value = " + JSON.stringify(value));
                     value.id = key;
-                    
+                    //console.log("value = " + JSON.stringify(value));
+
                     questions.push(value);
                 }
                 
