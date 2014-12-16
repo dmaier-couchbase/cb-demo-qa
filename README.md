@@ -27,11 +27,15 @@ To run the application the following requirements are existent:
 * The app's configuration needs to be adapted in order to use the right Couchbase cluster
 * The View /q_and_a/_design/questions/_view/all needs to be defined as the following one:
  
+```
  function (doc, meta) {
   emit(meta.id, null);
  }
- 
+```
+
 * An XDCR link between the Couchbase Cluster and the target Elastic Search cluster needs to be established
 * The following command starts the application
 
+```
 node app.js
+```
