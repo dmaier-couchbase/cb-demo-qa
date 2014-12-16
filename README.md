@@ -34,7 +34,8 @@ To run the application the following requirements are existent:
 ```
 
 * An XDCR link between the Couchbase Cluster and the target Elastic Search cluster needs to be established
-* The following command starts the application
+
+The following command starts the application
 
 ```
 node app.js
