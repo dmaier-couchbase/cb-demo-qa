@@ -1,0 +1,59 @@
+<div ng-include="'views/header.html'"/>
+
+<div class = "row marketing">
+    
+    <div ng-include="'views/msg.html'"/>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Add
+            </h4>
+        </div>
+        <div class="panel-body">
+            <!--
+            var cust = req.query.cust;
+            var rfp = req.query.rfp;
+            var version = req.query.version;
+            var category = req.query.category;
+            var comment = req.query.comment;
+            var q = req.query.q;
+            var a = req.query.a;
+            -->
+            
+            <form id="add" role="form">
+                <div class="form-group">
+                    <label for="inputCust">Customer Name</label>
+                    <input id="inputCust" ng-model="inputCust" type="text" class="form-control" placeholder="Enter the customer name"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputRfp">RFP Name</label>
+                    <input id="inputRfp" ng-model="inputRfp" type="text" class="form-control" placeholder="Enter the RFP name"/>
+                </div>
+                <div class="form-group">
+                    <label for="selectVersion">Version</label>
+                    <select id="selectVersion" ng-model="selectVersion" class="form-control">
+                        <option>2.2.0</option>
+                        <option>2.5.1</option>
+                        <option>3.0.1</option>
+                        <option>3.0.2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputCat">Category</label>
+                    <input id="inputCat" ng-model="inputCat" type="text" class="form-control" placeholder="Enter the category"/>
+                </div>
+                <div class="form-group">
+                    <label for="inputQ">Question</label>
+                    <input id="inputQ" ng-model="inputQ" type="text" class="form-control" placeholder="Enter the question"/>
+                </div>
+                <div class="form-group">
+                    <label for="textA">Question</label>
+                    <textarea id="textA" ng-model="textA" class="form-control" placeholder="Enter the answer"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-include="'views/footer.html'"/>

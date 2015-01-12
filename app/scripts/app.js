@@ -8,8 +8,24 @@
  *
  * Main module of the application.
  */
-angular
-  .module('cbDemoQaApp', [
+var app = angular.module('cbDemoQaApp', [
     'ngCookies',
-    'ngResource'
-  ]);
+    'ngResource',
+    'ngRoute'
+]);
+
+app.config(function($routeProvider) {
+   
+    $routeProvider
+    .when('/', {
+       templateUrl : 'views/main.html',
+       controller : 'MainCtrl'
+    })
+    .when('/add', {
+       templateUrl : 'views/add.html',
+       controller : 'MainCtrl'       
+    })
+    .otherwise({
+        redirectTo: '/'
+    });
+});
