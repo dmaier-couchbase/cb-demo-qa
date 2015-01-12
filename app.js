@@ -7,9 +7,16 @@ var fs = require('fs');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require('http');
+
+//Elastic search 
+var ES_HOST = '192.168.7.128';
+var ES_PORT = 9200;
+var ES_INDEX = 'q_and_a';
+var ES_TYPE = 'couchbaseDocument';
 
 //Couchbase requirements and connection initialization
-var CB_HOST = '192.168.7.145';
+var CB_HOST = '192.168.7.128';
 var CB_BUCKET = 'q_and_a';
 var CB_PWD = 'test';
 
@@ -66,11 +73,10 @@ app.post(SERVICE_URL + 'add', function (req, res) {
         question.rfp = rfp;
         question.version = version;
         question.category = category;
+        question.comments = [];
         
         if (a) question.answer = a;
         if (comment) {
-            
-            question.comments = [];
             question.comments.push(comment);
         }
 
@@ -162,7 +168,41 @@ app.get(SERVICE_URL + 'list', function (req, res) {
  */
 app.post(SERVICE_URL + 'comment', function (req, res) { 
 
-    //TODO
+    var id = req.query.id;
+    var id = req.query.comment;
+    
+    //Get the question by id, add the comment and save it back
+    bucket.get(key, function(err, cbres) {
+    
+        if (err) {
+            
+            var msg = "Could not retrieve message in order to add the comment!";
+            console.log("ERROR" + msg);
+            res.json({ "error" : msg });
+        }
+        else {
+         
+            console.log("res = " + JSON.stringify(cbres));
+            var value = cbres.value;
+            console.log("value = " + JSON.stringify(value));
+            value.comments.push(comment);
+        
+            bucket.replace(key, value, function(err2, cbres2) {
+               
+                if (err2)
+                {
+                    var msg = "Could not add the comment!";
+                    console.log("ERROR" + msg);
+                    res.json({ "error" : msg });      
+                }
+                else
+                {
+                    console.log("Added comment: " + JSON.stringify(value)); 
+                }
+            });
+        }
+    });
+    
 });
 
 
@@ -179,7 +219,45 @@ app.post(SERVICE_URL + 'import', function (req, res) {
  */
 app.get(SERVICE_URL + 'query', function (req, res) { 
 
-    //TODO
+    var q = req.query.q;
+
+    http://192.168.7.128:9200/q_and_a/couchbaseDocument/_search?q=mobile
+    
+    var options = {
+        'host' : ES_HOST,
+        'port' : ES_PORT, 
+        'path' : "/" + ES_INDEX + "/" + ES_TYPE + "/_search"
+    }
+    
+    if (q)
+    {
+        options.path = options.path + "?q=" + q;
+    }
+    
+    var httpReq = http.get (options, function(httpRes) {
+        
+        var buffer = [];        
+        
+        httpRes.on('data', function (chunk) {
+
+            buffer.push(chunk);
+            
+        }).on('end', function() {
+           
+            var body = Buffer.concat(buffer);
+            
+            //console.log(String.fromCharCode.apply(null, new Uint16Array(body)));
+            
+            res.json(String.fromCharCode.apply(null, new Uint16Array(body)));
+        });
+        
+    });
+    
+    httpReq.on('error', function(e) {
+        var msg = "Could not query the Elastic Search index!";
+        console.log("ERROR" + msg);
+        res.json({ "error" : msg }); 
+    });
 });
 
 
