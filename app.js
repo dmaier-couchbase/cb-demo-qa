@@ -62,6 +62,19 @@ app.post(SERVICE_URL + 'add', function (req, res) {
     var q = req.query.q;
     var a = req.query.a;
     
+    //TODO: Version and Category are optional. Also check more strictly if the mandatory properties are defined.
+    /*
+    Current result if not setting mandatory properties:
+    {
+    "question": "How are you?",
+    "cust": "Couchbase",
+    "rfp": "Test",
+    "version": "undefined",
+    "category": "undefined",
+    "comments": []
+    }
+    */
+    
     if (cust && rfp && version && category && q)
     {
         var date = new Date();

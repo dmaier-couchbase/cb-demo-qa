@@ -57,7 +57,7 @@ app.controller('AddCtrl', function($scope, QAService) {
                     },
                     function(error) {
                 
-                        MsgService.showMsg("error", JSON.stringify(error));
+                        MsgService.showMsg("error", "Internal error: " + JSON.stringify(error));
                     }                                            
             );         
         }
