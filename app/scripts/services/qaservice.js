@@ -24,7 +24,7 @@ TQAService.prototype.add = function(customer, rfp, version, category, question, 
 
 TQAService.prototype.list = function()
 {
-    var url = "/service/list';
+    var url = "/service/list";
     
     var promise = this.httpService.get(url).success(function(){});
     

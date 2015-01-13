@@ -23,7 +23,7 @@ app.config(function($routeProvider) {
     })
     .when('/add', {
        templateUrl : 'views/add.html',
-       controller : 'MainCtrl'       
+       controller : 'AddCtrl'       
     })
     .otherwise({
         redirectTo: '/'
