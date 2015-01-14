@@ -86,6 +86,7 @@ app.post(SERVICE_URL + 'add', function (req, res) {
         question.question = q;
         question.cust = cust;
         question.rfp = rfp;
+        question.comments = [];
         
         if (isDefined(version)) question.version = version;
         if (isDefined(category)) question.category = category;

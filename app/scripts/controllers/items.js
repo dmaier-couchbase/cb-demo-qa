@@ -14,6 +14,26 @@ function ItemsCtrl(scope, qaService)
 
 //--Helpers
 
+function encodeId(id)
+{
+   var b64 = 'X_' + window.btoa(unescape(encodeURIComponent(id)));
+   b64 = b64.replace(new RegExp("\\/", "g"),".");
+   b64 = b64.replace(new RegExp("\\+", "g"),"-");
+   b64 = b64.replace(new RegExp("=", "g"),"_");
+    
+   return b64;
+}
+
+function decodeId(id)
+{
+    var str = id.replace(new RegExp("X_", "g"),"");
+    str = str.replace(new RegExp("_", "g"),"=");
+    str = str.replace(new RegExp("-", "g"),"+");
+    str = str.replace(new RegExp("\\.", "g"),"/");
+    
+    return decodeURIComponent(escape(window.atob( str )));
+}
+
 /**
  * Checks if the array contains an element with the specific name. If yes, then it returns the position of it. Otherwise it
  * returns -1.
@@ -65,8 +85,7 @@ function crRfp(name)
 function crQuestion(id, q, a, v, c, cmts)
 {
     var qa = {};
-    //Replace :: with __ because html id-s do not allow ::
-    qa.id = id.replace(new RegExp("::", "g"),"__");
+    qa.id = encodeId(id);
     qa.question = q;
     qa.answer = a;
     qa.version = v;
@@ -179,7 +198,8 @@ ItemsCtrl.prototype.showItems = function(result)
                 {
                     me.hideAddCommentMsg();
                     
-                    var docId = id.replace(new RegExp("__", "g"),"::");
+                    var docId = decodeId(id);
+                    
                     me.qaService.comment(docId, comment).then(
                       
                         function(ctx)
