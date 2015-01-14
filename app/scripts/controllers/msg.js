@@ -1,20 +1,20 @@
 /**
- * TMsgService
+ * MsgCtrl
  */
 
 /*
  * Constructor
  */
-function TMsgService(scope)
+function MsgCtrl(scope)
 {
   this.scope = scope; 
 }
 
 /**
  * To set the model of an action in order to show the success or error message
- * The idea is to us this service in several controllers, whereby the view imports msg.html
+ * The idea is to us this sub-controller in several controllers, whereby the view imports msg.html
  */
-TMsgService.prototype.showMsg = function(type, msg)
+MsgCtrl.prototype.showMsg = function(type, msg)
 {
         if (type == "none")
         {

@@ -25,6 +25,14 @@ app.config(function($routeProvider) {
        templateUrl : 'views/add.html',
        controller : 'AddCtrl'       
     })
+    .when('/list', {
+       templateUrl : 'views/list.html',
+       controller : 'ListCtrl'  
+    })
+    .when('/search', {
+        templateUrl : 'views/search.html',
+        controller : 'SearchCtrl'
+    })
     .otherwise({
         redirectTo: '/'
     });

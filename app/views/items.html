@@ -1,0 +1,18 @@
+    <div class="panel panel-default" ng-repeat="cust in customers">
+        <div class="panel-heading"><h4>{{ cust.name }}</h4></div>
+        <div class="panel-body">
+            <div class="panel panel-default" ng-repeat="rfp in cust.rfps">
+                <div class="panel-heading"><h5>{{ rfp.name }}</h5></div>
+                <div class="panel-body" ng-repeat="q in rfp.questions">
+                    <div class="panel">
+                        <div class="caption">
+                            <b>{{ q.question }}</b> 
+                            <span class="label label-default">{{q.version}}</span> 
+                            <span class="label label-info">{{q.category}}</span>
+                        </div>
+                        <p>{{ q.answer }}</p>
+                    </div>
+                </div>    
+            </div>
+        </div>   
+    </div>

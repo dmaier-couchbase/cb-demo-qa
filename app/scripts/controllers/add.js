@@ -5,8 +5,8 @@ var app = angular.module('cbDemoQaApp');
 app.controller('AddCtrl', function($scope, QAService) {
         
     //The service can not be injected because the scope can't be passed as parameter to service at construction time otherwise
-    var MsgService = new TMsgService($scope);
-    MsgService.showMsg("none","");
+    var msg = new MsgCtrl($scope);
+    msg.showMsg("none","");
     
     $scope.onAddClicked = function(cust, rfp, version, cat, q, a)
     {        
@@ -34,7 +34,7 @@ app.controller('AddCtrl', function($scope, QAService) {
         
         if (!validated)
         {
-            MsgService.showMsg("error","The following fields are required" + JSON.stringify(fields));  
+            msg.showMsg("error","The following fields are required: " + JSON.stringify(fields));  
         }
         else
         {
@@ -47,17 +47,17 @@ app.controller('AddCtrl', function($scope, QAService) {
                 
                     if (result.error)
                     {
-                        MsgService.showMsg("error", result.error.msg);                    
+                        msg.showMsg("error", result.error.msg);                    
                     }
                     else
                     {
                         //Show the success message
-                        MsgService.showMsg("success", "Successfully added the question");                }                
+                        msg.showMsg("success", "Successfully added the question");                }                
             
                     },
                     function(error) {
                 
-                        MsgService.showMsg("error", "Internal error: " + JSON.stringify(error));
+                        msg.showMsg("error", "Internal error: " + JSON.stringify(error));
                     }                                            
             );         
         }

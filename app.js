@@ -47,6 +47,19 @@ app.use('/bower_components',express.static(__dirname + '/bower_components'));
 var SERVICE_URL = '/service/';
 
 /**
+ * Helper to check if the variable is defined
+ */
+function isDefined(obj)
+{  
+    if (typeof obj == 'undefined' || obj == 'undefined' || obj == null)
+    {
+        return false;
+    }
+    
+    return true;
+}
+
+/**
  * Add a question
  *
  * The bucket 'q_and_a' has to be existent
@@ -62,20 +75,9 @@ app.post(SERVICE_URL + 'add', function (req, res) {
     var q = req.query.q;
     var a = req.query.a;
     
-    //TODO: Version and Category are optional. Also check more strictly if the mandatory properties are defined.
-    /*
-    Current result if not setting mandatory properties:
-    {
-    "question": "How are you?",
-    "cust": "Couchbase",
-    "rfp": "Test",
-    "version": "undefined",
-    "category": "undefined",
-    "comments": []
-    }
-    */
     
-    if (cust && rfp && version && category && q)
+    
+    if (isDefined(cust) && isDefined(rfp) && isDefined(q))
     {
         var date = new Date();
         var qKey = "q::" + cust + "::" + rfp + "::" + date.getTime();
@@ -84,11 +86,11 @@ app.post(SERVICE_URL + 'add', function (req, res) {
         question.question = q;
         question.cust = cust;
         question.rfp = rfp;
-        question.version = version;
-        question.category = category;
-        question.comments = [];
         
-        if (a) question.answer = a;
+        if (isDefined(version)) question.version = version;
+        if (isDefined(category)) question.category = category;
+        if (isDefined(a)) question.answer = a;
+    
         if (comment) {
             question.comments.push(comment);
         }
@@ -260,8 +262,10 @@ app.get(SERVICE_URL + 'query', function (req, res) {
             var body = Buffer.concat(buffer);
             
             //console.log(String.fromCharCode.apply(null, new Uint16Array(body)));
+            var jsonStr = String.fromCharCode.apply(null, new Uint16Array(body));
+            var json = JSON.parse(jsonStr);
             
-            res.json(String.fromCharCode.apply(null, new Uint16Array(body)));
+            res.json(json);
         });
         
     });
