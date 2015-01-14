@@ -5,7 +5,7 @@ var app = angular.module('cbDemoQaApp');
 app.controller('SearchCtrl', function($scope, QAService) {
         
     var msg = new MsgCtrl($scope);
-    var items = new ItemsCtrl($scope);
+    var items = new ItemsCtrl($scope, QAService);
     
     msg.showMsg("none","");
     
@@ -23,7 +23,10 @@ app.controller('SearchCtrl', function($scope, QAService) {
                  
                   for (var i = 0; i < hits.length; i++)
                   {
-                      docs.push(hits[i]._source.doc);
+                      var doc = hits[i]._source.doc;
+                      doc.id = hits[i]._id;
+                      
+                      docs.push(doc);
                   }
                  
                   items.showItems(docs);

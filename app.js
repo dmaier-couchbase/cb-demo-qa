@@ -184,25 +184,28 @@ app.get(SERVICE_URL + 'list', function (req, res) {
 app.post(SERVICE_URL + 'comment', function (req, res) { 
 
     var id = req.query.id;
-    var id = req.query.comment;
+    var comment = req.query.comment;
+    
+    console.log(id);
     
     //Get the question by id, add the comment and save it back
-    bucket.get(key, function(err, cbres) {
+    bucket.get(id, function(err, cbres) {
     
         if (err) {
             
+            //console.log(JSON.stringify(err));
             var msg = "Could not retrieve message in order to add the comment!";
             console.log("ERROR" + msg);
             res.json({ "error" : msg });
         }
         else {
          
-            console.log("res = " + JSON.stringify(cbres));
+            //console.log("res = " + JSON.stringify(cbres));
             var value = cbres.value;
-            console.log("value = " + JSON.stringify(value));
+            //console.log("value = " + JSON.stringify(value));
             value.comments.push(comment);
         
-            bucket.replace(key, value, function(err2, cbres2) {
+            bucket.replace(id, value, function(err2, cbres2) {
                
                 if (err2)
                 {
@@ -212,7 +215,8 @@ app.post(SERVICE_URL + 'comment', function (req, res) {
                 }
                 else
                 {
-                    console.log("Added comment: " + JSON.stringify(value)); 
+                    console.log("Added comment: " + JSON.stringify(value));
+                    res.json({"success" : "Added comment"});
                 }
             });
         }

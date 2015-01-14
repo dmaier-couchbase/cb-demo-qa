@@ -52,7 +52,8 @@ app.controller('AddCtrl', function($scope, QAService) {
                     else
                     {
                         //Show the success message
-                        msg.showMsg("success", "Successfully added the question");                }                
+                        msg.showMsg("success", "Successfully added the question");                
+                    }                
             
                     },
                     function(error) {

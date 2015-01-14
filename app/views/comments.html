@@ -1,0 +1,29 @@
+<!-- Comments -->
+<div class="modal fade" id="modal-{{ q.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="onCommentsClosed()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Comments</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger {{cmsg.err}}">
+                    {{cmsg.msg}}
+                </div>
+                <div class="bubble" ng-repeat="c in q.comments">
+                    {{c}}
+                </div>
+            </div>
+            <div class="modal-footer">
+               <form id="addComment" role="form">
+                    <div class="form-group">
+                        <input id="inputCmt" ng-model="inputCmt" type="text" class="form-control" placeholder="Enter your comment here"/>
+                    </div>
+                    <button id="button-{{ q.id }}" class="btn btn-default" ng-click="onAddCommentClicked(q.id, inputCmt)">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

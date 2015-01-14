@@ -5,7 +5,7 @@ var app = angular.module('cbDemoQaApp');
 app.controller('ListCtrl', function($scope, QAService) {
    
     var msg = new MsgCtrl($scope);
-    var items = new ItemsCtrl($scope);
+    var items = new ItemsCtrl($scope, QAService);
     
     msg.showMsg("none","");
     

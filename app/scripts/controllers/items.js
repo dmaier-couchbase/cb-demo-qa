@@ -5,9 +5,10 @@
 /*
  * Constructor
  */
-function ItemsCtrl(scope)
+function ItemsCtrl(scope, qaService)
 {
-  this.scope = scope; 
+  this.scope = scope;
+  this.qaService = qaService;
 }
 
 
@@ -61,17 +62,39 @@ function crRfp(name)
 /**
  * Create a question
  */
-function crQuestion(q, a, v, c)
+function crQuestion(id, q, a, v, c, cmts)
 {
     var qa = {};
+    //Replace :: with __ because html id-s do not allow ::
+    qa.id = id.replace(new RegExp("::", "g"),"__");
     qa.question = q;
     qa.answer = a;
     qa.version = v;
     qa.category = c;
+    qa.comments = cmts;
         
     return qa;
 }
 
+//-- Functions 
+ItemsCtrl.prototype.hideAddCommentMsg = function() {
+
+    var msg = {};
+    msg.err =  "hidden";
+    msg.msg  = "";
+    this.scope.cmsg = msg;
+}
+
+ItemsCtrl.prototype.showAddCommentMsg = function(text)
+{
+     var msg = {};
+     msg.err = "";
+     msg.msg = text;
+     this.scope.cmsg = msg;
+}
+
+
+//-- Set the model of the view
 /*
  * Show items based on the passed result
  */
@@ -96,7 +119,7 @@ ItemsCtrl.prototype.showItems = function(result)
                     var rfp = crRfp(q.rfp);
                                       
                     //Create an inital question for the RFP
-                    var qa = crQuestion(q.question, q.answer, q.version, q.category);
+                    var qa = crQuestion(q.id, q.question, q.answer, q.version, q.category, q.comments);
                    
                     //Add the question
                     rfp.questions.push(qa);
@@ -117,7 +140,7 @@ ItemsCtrl.prototype.showItems = function(result)
                    if (rfpIdx == -1)
                    {
                      var rfp = crRfp(q.rfp);
-                     var qa = crQuestion(q.question, q.answer, q.version, q.category);
+                     var qa = crQuestion(q.id, q.question, q.answer, q.version, q.category, q.comments);
                      rfp.questions.push(qa);
                      cust.rfps.push(rfp);
                    }
@@ -125,7 +148,7 @@ ItemsCtrl.prototype.showItems = function(result)
                    {
                         //Otherwise just add the question to the existing RFP
                         var rfp = cust.rfps[rfpIdx];
-                        var qa = crQuestion(q.question, q.answer, q.version, q.category);
+                        var qa = crQuestion(q.id, q.question, q.answer, q.version, q.category, q.comments);
                         rfp.questions.push(qa);     
                    }
                }
@@ -134,4 +157,70 @@ ItemsCtrl.prototype.showItems = function(result)
             
             //console.log(JSON.stringify(customers));
             this.scope.customers = customers;
+    
+            this.hideAddCommentMsg();
+    
+            var me = this;
+    
+            //-- Comments
+            this.scope.onCommentsClosed = function()
+            {
+                me.hideAddCommentMsg();
+            }
+    
+            this.scope.onAddCommentClicked = function(id, comment)
+            {
+                //Validate
+                if (typeof comment == "undefined" || comment == "undefined")
+                {
+                   me.showAddCommentMsg("Please enter a comment");
+                }
+                else
+                {
+                    me.hideAddCommentMsg();
+                    
+                    var docId = id.replace(new RegExp("__", "g"),"::");
+                    me.qaService.comment(docId, comment).then(
+                      
+                        function(ctx)
+                        {
+                            
+                            var result = ctx.data;
+                
+                            if (result.error)
+                            {
+                                me.showAddCommentMsg(result.error.msg);                    
+                            }
+                            else
+                            {
+                                //Add the comment to the view by modifying the view model
+                                //TODO: Find a better way. The nested loop is a kind of bad
+                                var customers = me.scope.customers;
+                                
+                                for (var i = 0; i < customers.length; i++)
+                                {
+                                    var rfps = customers[i].rfps;
+                                    
+                                    for (var j = 0; j < rfps.length; j++)
+                                    {
+                                        var questions = rfps[j].questions;
+                                        
+                                        for (var k = 0; k < questions.length; k++)
+                                        {
+                                            if (questions[k].id == id)
+                                            {
+                                                me.scope.customers[i].rfps[j].questions[k].comments.push(comment);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        function(error)
+                        {
+                            me.showAddCommentMsg("Internal error: " + JSON.stringify(error));
+                        }
+                    );
+                }
+            }
 }
