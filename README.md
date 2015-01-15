@@ -1,5 +1,5 @@
-cb-demo-qa
-==========
+Couchbase Q&A Demo App
+======================
 
 A demo application which shows how to use the Couchbase Node.js module. The app allows the following:
 
@@ -40,3 +40,12 @@ The following command starts the application
 ```
 node app.js
 ```
+
+Screenshots
+===========
+![alt tag](https://raw.github.com/dmaier-couchbase/cb-demo-qa/master/screenshots/home.png)
+![alt tag](https://raw.github.com/dmaier-couchbase/cb-demo-qa/master/screenshots/add.png)
+![alt tag](https://raw.github.com/dmaier-couchbase/cb-demo-qa/master/screenshots/list.png)
+![alt tag](https://raw.github.com/dmaier-couchbase/cb-demo-qa/master/screenshots/comments.png)
+![alt tag](https://raw.github.com/dmaier-couchbase/cb-demo-qa/master/screenshots/search.png)
+![alt tag](https://raw.github.com/dmaier-couchbase/cb-demo-qa/master/screenshots/file-import.png)
