@@ -12,19 +12,21 @@ A demo application which shows how to use the Couchbase Node.js module. The app 
 
 The service tier of the application is developed by using Node.js and Express. 
 
-* Express gives us an easy way to implement the service tier by providing a REST interface.
-* The static resources of the application are served by Express,too.
+* Express gives us an easy way to implement the service tier by providing a REST interface
+* Also the static resources of the application are served by Express
 
-For the development of the client tier of the application Angular.js was used.
+Angular.js was used for the development of the client tier of the application.
 
-* The REST services are wrapped on site of the client
-* The controllers are using those client side service wrappers
+* The REST services are wrapped on side of the client by providing an Angular Service
+* The Controllers are using those client side service wrappers
 * The views are decorated by using Twitter's Bootstrap
 
 To run the application the following requirements are existent:
 
 * A bucket 'q_and_a' needs to be existent on side of Couchbase
-* The app's configuration needs to be adapted in order to use the right Couchbase cluster
+* The app's configuration needs to be adapted in order to use the right Couchbase and Elasticsearch clusters
+* The Elasticsearch cluster needs to have installed the Coucbase Transport Plug-in
+* An XDCR link between the Couchbase Cluster and the target Elasticsearch cluster needs to be established
 * The View /q_and_a/_design/questions/_view/all needs to be defined as the following one:
  
 ```
@@ -32,8 +34,6 @@ To run the application the following requirements are existent:
   emit(meta.id, null);
  }
 ```
-
-* An XDCR link between the Couchbase Cluster and the target Elastic Search cluster needs to be established
 
 The following command starts the application
 
