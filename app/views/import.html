@@ -1,0 +1,25 @@
+<div ng-include="'views/header.html'"/>
+
+<div class = "row marketing">
+    
+    <!-- TODO: Add it later: <div ng-include="'views/msg.html'"/> -->
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Import
+            </h4>
+        </div>
+        <div class="panel-body">
+            <form id="upload" role="form">
+                <div class="form-group">
+                    <label for="inputFile">File*</label>
+                    <input id="inputFile" ng-model="inputFile" type="file" class="form-control"/>
+                </div>
+                <button id="buttonUpload" class="btn btn-default" ng-click="">Upload</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div ng-include="'views/footer.html'"/>

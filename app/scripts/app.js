@@ -33,6 +33,10 @@ app.config(function($routeProvider) {
         templateUrl : 'views/search.html',
         controller : 'SearchCtrl'
     })
+    .when('/import', {
+       templateUrl : 'views/import.html',
+       controller : 'MainCtrl' 
+    })
     .otherwise({
         redirectTo: '/'
     });
