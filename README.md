@@ -3,11 +3,11 @@ Couchbase Q&A Demo App
 
 A demo application which shows how to use the Couchbase Node.js module. The app allows the following:
 
-* Upload RFP questions as CSV
 * Add questions via the UI
 * List all questions
 * Search for questions and answers
 * Add comments to questions
+* Upload RFP questions as CSV
 * ...
 
 The service tier of the application is developed by using Node.js and Express. 
