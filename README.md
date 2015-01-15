@@ -19,9 +19,9 @@ Angular.js was used for the development of the client tier of the application.
 
 * The REST services are wrapped on side of the client by providing an Angular Service
 * The Controllers are using those client side service wrappers
-* The views are decorated by using Twitter's Bootstrap
+* The UI Views are decorated by using Twitter's Bootstrap
 
-To run the application the following requirements are existent:
+In order to run the application the following requirements are existent:
 
 * A bucket 'q_and_a' needs to be existent on side of Couchbase
 * The app's configuration needs to be adapted in order to use the right Couchbase and Elasticsearch clusters
